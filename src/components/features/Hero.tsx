@@ -4,9 +4,19 @@ import Link from "next/link";
 export default function Hero() {
   return (
     <section className="relative overflow-hidden bg-white pt-28 pb-16">
-      <div className="mx-auto flex max-w-6xl flex-col-reverse items-center gap-10 px-4 md:flex-row md:px-0">
+      <div className="pointer-events-none absolute inset-y-0 right-0 w-[64%]">
+        <Image
+          src="/images/blue.svg"
+          alt=""
+          fill
+          priority
+          className="object-cover"
+        />
+      </div>
+
+      <div className="relative mx-auto flex max-w-6xl flex-col-reverse items-center gap-10 px-4 md:flex-row md:px-0">
         <div className="w-full md:w-1/2">
-          <p className="mb-4 text-xs font-semibold tracking-[0.2em] text-[#DF6951]">
+          <p className="mb-4 text-xs font-semibold tracking-[0.2em] text-[#0073D9]">
             EXPLORE THE WORLD! WITH TRAVELCINI
           </p>
           <h1 className="mb-4 text-4xl font-semibold leading-tight text-[#14183E] md:text-5xl">
@@ -35,7 +45,6 @@ export default function Hero() {
         </div>
 
         <div className="relative w-full md:w-1/2">
-          <div className="absolute -right-10 top-10 h-72 w-72 rounded-[60px] bg-[#4475F2] opacity-20 blur-3xl z-[-1] md:h-[22rem] md:w-[22rem]" />
           <div className="relative z-10 flex justify-center md:justify-end">
             <Image
               src="/images/human.png"

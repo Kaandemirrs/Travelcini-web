@@ -13,12 +13,12 @@ export default function Header() {
       <div className="mx-auto flex h-20 max-w-6xl items-center justify-between px-4 md:px-0">
         <Link href="/" className="flex items-center">
           <Image
-            src="/images/logo.png"
+            src="/images/logos.svg"
             alt="TravelCini"
-            width={150}
-            height={40}
+            width={190}
+            height={48}
             priority
-            className="h-auto w-[150px]"
+            className="h-auto w-[190px]"
           />
         </Link>
 
@@ -43,7 +43,7 @@ export default function Header() {
           </button>
           <button
             type="button"
-            className="rounded-full bg-[#4475F2] px-6 py-2 text-sm font-semibold text-white shadow-md shadow-[#4475F2]/40 transition-transform transition-shadow hover:-translate-y-0.5 hover:shadow-lg"
+            className="rounded-full border border-[#0073D9] bg-[#0073D9] px-6 py-2 text-sm font-semibold text-white shadow-md shadow-[#0073D9]/40 transition-transform transition-shadow hover:-translate-y-0.5 hover:bg-[#005fb1] hover:shadow-lg"
           >
             Sign up
           </button>

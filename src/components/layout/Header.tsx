@@ -9,16 +9,16 @@ const navItems = [
 
 export default function Header() {
   return (
-    <header className="fixed inset-x-0 top-0 z-50 bg-transparent">
+    <header className="fixed inset-x-0 top-0 z-50 border-b border-neutral-200 bg-white">
       <div className="mx-auto flex h-20 max-w-6xl items-center justify-between px-4 md:px-0">
         <Link href="/" className="flex items-center">
           <Image
             src="/images/logos.svg"
             alt="TravelCini"
-            width={190}
-            height={48}
+            width={135}
+            height={36}
             priority
-            className="h-auto w-[190px]"
+            className="h-auto w-[135px]"
           />
         </Link>
 

@@ -2,9 +2,9 @@ import Image from "next/image";
 import Link from "next/link";
 
 const navItems = [
-  { label: "Home", href: "#" },
-  { label: "Trips", href: "#trips" },
-  { label: "Groups", href: "#groups" },
+  { label: "Home", href: "/" },
+  { label: "Trips", href: "/trips" },
+  { label: "Groups", href: "/groups" },
 ];
 
 export default function Header() {

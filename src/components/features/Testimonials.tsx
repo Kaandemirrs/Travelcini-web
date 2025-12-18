@@ -19,17 +19,15 @@ export default function Testimonials() {
         </div>
 
         <div className="flex w-full justify-center md:w-1/2 md:justify-end">
-          <div className="relative h-[320px] w-full max-w-md overflow-hidden rounded-[32px] bg-white shadow-[0_30px_60px_rgba(0,0,0,0.12)]">
-            <Image
-              src="/images/yorum.png"
-              alt="Traveler reviews"
-              fill
-              className="object-cover"
-            />
-          </div>
+          <Image
+            src="/images/yorum.png"
+            alt="Traveler reviews"
+            width={420}
+            height={320}
+            className="h-auto w-full max-w-md rounded-[32px] object-cover"
+          />
         </div>
       </div>
     </section>
   );
 }
-

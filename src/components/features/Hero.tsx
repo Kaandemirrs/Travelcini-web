@@ -20,12 +20,7 @@ export default function Hero() {
             EXPLORE THE WORLD! WITH TRAVELCINI
           </p>
           <h1 className="mb-4 text-4xl font-semibold leading-tight text-[#14183E] md:text-5xl">
-            Travel,{" "}
-            <span className="relative inline-block font-serif">
-              enjoy
-              <span className="pointer-events-none absolute inset-x-0 bottom-0 h-2 translate-y-2 rounded-full bg-[#F1A501]" />
-            </span>{" "}
-            and live a new and full life
+            Travel, enjoy and live a new and full life
           </h1>
           <p className="mb-8 text-sm leading-relaxed text-neutral-500 md:text-base">
             Built Wicket longer admire do barton vanity itself do in it.{" "}

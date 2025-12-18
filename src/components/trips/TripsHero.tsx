@@ -265,7 +265,7 @@ export default function TripsHero() {
       await saveTrip(tripData);
 
       window.alert("Trip Saved!");
-      router.push("/profile");
+      closePlanning();
     } catch (error: any) {
       if (error?.message === "LIMIT_REACHED") {
         window.alert("You have reached your free limit. Please upgrade to Pro.");
@@ -359,8 +359,8 @@ export default function TripsHero() {
       </section>
 
       {isOpen && (
-        <div className="fixed inset-0 z-40 flex items-center justify-center bg-black/40 px-4">
-          <div className="relative w-full max-w-5xl overflow-hidden rounded-[32px] bg-[radial-gradient(circle_at_center,#0872D0_0,#003666_60%)] px-5 py-6 text-white md:px-10 md:py-8">
+        <div className="fixed inset-0 z-40 flex items-start justify-center overflow-y-auto bg-black/40 px-4 py-6 md:py-10">
+          <div className="relative mt-10 mb-8 w-full max-w-5xl rounded-[32px] bg-[radial-gradient(circle_at_center,#0872D0_0,#003666_60%)] px-5 py-6 text-white md:mt-14 md:px-10 md:py-8">
             <div className="mb-6 flex items-center justify-between text-xs text-white/80">
               <div className="w-full max-w-xs md:max-w-sm">
                 <div className="mb-2 flex items-center justify-between text-[11px]">
@@ -425,7 +425,7 @@ export default function TripsHero() {
             </div>
 
             {step === 1 && (
-              <div className="mb-8 grid gap-4 md:grid-cols-4 md:gap-6">
+              <div className="mb-8 grid items-stretch gap-4 md:grid-cols-4 md:gap-6">
                 {themes.map((theme) => {
                   const isSelected = selectedTheme === theme.title;
 
@@ -434,7 +434,7 @@ export default function TripsHero() {
                       key={theme.title}
                       type="button"
                       onClick={() => setSelectedTheme(theme.title)}
-                      className={`group flex flex-col overflow-hidden rounded-[24px] border text-left shadow-[0_20px_40px_rgba(0,0,0,0.35)] backdrop-blur-sm transition-transform transition-shadow hover:-translate-y-1 hover:shadow-[0_28px_60px_rgba(0,0,0,0.5)] ${
+                      className={`group flex h-full flex-col overflow-hidden rounded-[24px] border text-left shadow-[0_20px_40px_rgba(0,0,0,0.35)] backdrop-blur-sm transition-transform transition-shadow hover:-translate-y-1 hover:shadow-[0_28px_60px_rgba(0,0,0,0.5)] ${
                         isSelected
                           ? "border-[#6FC3FF] bg-white/10 ring-2 ring-[#6FC3FF]/60"
                           : "border-white/10 bg-white/5 hover:border-white/40"
@@ -462,10 +462,10 @@ export default function TripsHero() {
                             {theme.title}
                           </span>
                         </div>
-                        <p className="text-[11px] text-white/75">
+                        <p className="h-[36px] overflow-hidden text-[11px] text-white/75">
                           {theme.description}
                         </p>
-                        <span className="mt-2 text-[11px] font-semibold text-[#6FC3FF] group-hover:text-white">
+                        <span className="mt-auto pt-2 text-[11px] font-semibold text-[#6FC3FF] group-hover:text-white">
                           View spots
                         </span>
                       </div>
@@ -506,7 +506,7 @@ export default function TripsHero() {
                 <div className="flex flex-wrap justify-center gap-3 md:gap-4">
                   <div
                     className={`flex items-center gap-3 rounded-full px-5 py-3 text-left shadow-[0_10px_24px_rgba(0,0,0,0.35)] transition-colors ${
-                      travelType === "solo" ? "bg-white text-[#003666]" : "bg-[#3DA9FF]"
+                      travelType === "solo" ? "bg-[#005fb1]" : "bg-[#3DA9FF]"
                     }`}
                     onClick={() => setTravelType("solo")}
                   >
@@ -520,6 +520,7 @@ export default function TripsHero() {
                         />
                       </div>
                     </div>
+
                     <div className="text-xs md:text-sm">
                       <div className="font-semibold text-white">Solo</div>
                       <div className="text-white/80">Just me</div>
@@ -528,7 +529,7 @@ export default function TripsHero() {
 
                   <div
                     className={`flex items-center gap-3 rounded-full px-5 py-3 text-left shadow-[0_10px_24px_rgba(0,0,0,0.35)] transition-colors ${
-                      travelType === "couple" ? "bg-white text-[#003666]" : "bg-[#3DA9FF]"
+                      travelType === "couple" ? "bg-[#005fb1]" : "bg-[#3DA9FF]"
                     }`}
                     onClick={() => setTravelType("couple")}
                   >
@@ -550,7 +551,7 @@ export default function TripsHero() {
 
                   <div
                     className={`flex items-center gap-3 rounded-full px-5 py-3 text-left shadow-[0_10px_24px_rgba(0,0,0,0.35)] transition-colors ${
-                      travelType === "friends" ? "bg-white text-[#003666]" : "bg-[#3DA9FF]"
+                      travelType === "friends" ? "bg-[#005fb1]" : "bg-[#3DA9FF]"
                     }`}
                     onClick={() => setTravelType("friends")}
                   >
@@ -595,7 +596,7 @@ export default function TripsHero() {
 
                   <div
                     className={`flex items-center gap-3 rounded-full px-5 py-3 text-left shadow-[0_10px_24px_rgba(0,0,0,0.35)] transition-colors ${
-                      travelType === "family" ? "bg-white text-[#003666]" : "bg-[#3DA9FF]"
+                      travelType === "family" ? "bg-[#005fb1]" : "bg-[#3DA9FF]"
                     }`}
                     onClick={() => setTravelType("family")}
                   >
@@ -762,7 +763,7 @@ export default function TripsHero() {
             {step === 4 && (
               <div className="mb-8 flex flex-col gap-6 md:flex-row">
                 <div className="w-full md:w-[40%]">
-                  <div className="h-full rounded-[24px] bg-[#3DA9FF] p-5 shadow-[0_20px_40px_rgba(0,0,0,0.35)]">
+                  <div className="rounded-[24px] bg-[#3DA9FF] p-5 shadow-[0_20px_40px_rgba(0,0,0,0.35)]">
                     <div className="mb-4 flex items-center gap-3 text-sm font-semibold text-white">
                       <div className="relative h-5 w-5">
                         <Image
@@ -834,7 +835,7 @@ export default function TripsHero() {
                 </div>
 
                 <div className="w-full md:flex-1">
-                  <div className="flex h-full flex-col rounded-[24px] bg-[#62B8FF] shadow-[0_20px_40px_rgba(0,0,0,0.35)]">
+                  <div className="flex flex-col rounded-[24px] bg-[#62B8FF] shadow-[0_20px_40px_rgba(0,0,0,0.35)]">
                     <div className="flex overflow-hidden rounded-t-[24px] bg-[#7DC5FF] text-xs font-semibold text-[#003666] md:text-sm">
                       <div className="flex flex-1 items-center justify-center bg-white px-3 py-3 text-[#003666]">
                         Best Deals
@@ -846,16 +847,16 @@ export default function TripsHero() {
                         AI Map
                       </div>
                     </div>
-                    <div className="flex-1 rounded-b-[24px] bg-white">
-                      <div className="h-full w-full overflow-hidden rounded-b-[24px] bg-white">
+                    <div className="rounded-b-[24px] bg-white">
+                      <div className="h-[320px] sm:h-[360px] md:h-[420px] lg:h-[460px] w-full overflow-hidden rounded-b-[24px] bg-white">
                         <iframe
                           id="widgetIframe"
                           src={expediaSrc}
                           width="100%"
                           height="100%"
-                          scrolling="no"
+                          scrolling="auto"
                           frameBorder="0"
-                          style={{ border: 0, minHeight: "600px" }}
+                          style={{ border: 0 }}
                         />
                       </div>
                     </div>

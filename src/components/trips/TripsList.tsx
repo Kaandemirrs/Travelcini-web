@@ -2,13 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import {
-  collection,
-  onSnapshot,
-  orderBy,
-  query,
-  where,
-} from "firebase/firestore";
+import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { useAuth } from "@/context/AuthContext";
 import type { Trip } from "@/types/firestore";
@@ -66,11 +60,7 @@ export default function TripsList() {
     }
 
     const tripsRef = collection(db, "trips");
-    const tripsQuery = query(
-      tripsRef,
-      where("userId", "==", user.uid),
-      orderBy("createdAt", "desc"),
-    );
+    const tripsQuery = query(tripsRef, where("userId", "==", user.uid));
 
     const unsubscribe = onSnapshot(tripsQuery, (snapshot) => {
       const next: TripWithMeta[] = [];
@@ -88,6 +78,11 @@ export default function TripsList() {
           status: data.status ?? "active",
           createdAt: data.createdAt,
         });
+      });
+      next.sort((a, b) => {
+        const aTime = a.createdAt?.seconds ?? 0;
+        const bTime = b.createdAt?.seconds ?? 0;
+        return bTime - aTime;
       });
 
       setTrips(next);

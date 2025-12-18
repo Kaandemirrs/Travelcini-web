@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { saveTrip } from "@/hooks/useTripSaver";
 
 const monthNames = [
@@ -114,12 +114,27 @@ export default function TripsHero() {
   const [friendsCount, setFriendsCount] = useState(0);
   const [familyCount, setFamilyCount] = useState(0);
   const [saving, setSaving] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const loadingTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     if (!isOpen) {
       setStep(1);
+      setIsLoading(false);
+      if (loadingTimeoutRef.current) {
+        clearTimeout(loadingTimeoutRef.current);
+        loadingTimeoutRef.current = null;
+      }
     }
   }, [isOpen]);
+
+  useEffect(() => {
+    return () => {
+      if (loadingTimeoutRef.current) {
+        clearTimeout(loadingTimeoutRef.current);
+      }
+    };
+  }, []);
 
   const openPlanning = () => {
     setStep(1);
@@ -159,7 +174,8 @@ export default function TripsHero() {
   }
 
   const bottomBarWidthClass = topBarWidthClass;
-  const primaryActionLabel = step === 4 ? (saving ? "Saving..." : "Save") : "Continue";
+  const primaryActionLabel =
+    step === 4 ? (saving ? "Saving..." : "Save") : isLoading ? "Loading..." : "Continue";
 
   let dateLabel = "Flexible dates";
 
@@ -232,7 +248,27 @@ export default function TripsHero() {
   };
 
   const handleContinue = () => {
-    if (step < 4) {
+    if (step === 3) {
+      if (isLoading) {
+        return;
+      }
+
+      setIsLoading(true);
+
+      if (loadingTimeoutRef.current) {
+        clearTimeout(loadingTimeoutRef.current);
+      }
+
+      loadingTimeoutRef.current = setTimeout(() => {
+        setIsLoading(false);
+        setStep(4);
+        loadingTimeoutRef.current = null;
+      }, 5500);
+
+      return;
+    }
+
+    if (step < 3) {
       setStep(step + 1);
     }
   };
@@ -757,6 +793,17 @@ export default function TripsHero() {
                     );
                   })}
                 </div>
+
+                {isLoading && (
+                  <div className="mx-auto mt-6 flex w-full max-w-sm flex-col gap-2">
+                    <div className="h-1.5 w-full overflow-hidden rounded-full bg-white/15">
+                      <div className="h-full w-full animate-pulse rounded-full bg-[#3DA9FF]" />
+                    </div>
+                    <p className="text-center text-xs text-white/80 md:text-sm">
+                      Loading your travel plan...
+                    </p>
+                  </div>
+                )}
               </div>
             )}
 
@@ -875,14 +922,15 @@ export default function TripsHero() {
                 <button
                   type="button"
                   onClick={handleBack}
-                  className="inline-flex items-center justify-center rounded-full border border-white/40 px-8 py-2.5 text-sm font-semibold text-white transition-colors hover:border-white hover:bg-white/10"
+                  disabled={isLoading || (step === 4 && saving)}
+                  className="inline-flex items-center justify-center rounded-full border border-white/40 px-8 py-2.5 text-sm font-semibold text-white transition-colors hover:border-white hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-70"
                 >
                   Back
                 </button>
                 <button
                   type="button"
                   onClick={step === 4 ? handleSave : handleContinue}
-                  disabled={step === 4 && saving}
+                  disabled={isLoading || (step === 4 && saving)}
                   className="inline-flex items-center justify-center rounded-full bg-[#06B0FF] px-8 py-2.5 text-sm font-semibold text-white shadow-md shadow-black/30 transition-transform transition-shadow hover:-translate-y-0.5 hover:bg-[#09c1ff] hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-70"
                 >
                   {primaryActionLabel}

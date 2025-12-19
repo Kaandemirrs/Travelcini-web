@@ -1,7 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // We can add config options here later if needed
+  output: 'export',   // <--- İŞTE BU EKSİK! Bunu eklemezsek out klasörü çıkmaz.
+  images: {
+    unoptimized: true, // <--- Resimlerin Hostinger'da görünmesi için şart.
+  },
 };
 
 export default nextConfig;
-

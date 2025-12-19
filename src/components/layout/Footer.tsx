@@ -1,5 +1,10 @@
+"use client";
+
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { db } from "@/lib/firebase";
 
 const columns = [
   {
@@ -17,6 +22,33 @@ const columns = [
 ];
 
 export default function Footer() {
+  const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleSubscribe = async () => {
+    const trimmed = email.trim();
+    if (!trimmed || loading) {
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const newsletterRef = collection(db, "newsletter");
+      await addDoc(newsletterRef, {
+        email: trimmed,
+        subscribedAt: serverTimestamp(),
+      });
+      window.alert("Thanks for subscribing!");
+      setEmail("");
+    } catch (error) {
+      console.error("Failed to subscribe to newsletter", error);
+      window.alert("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <footer className="bg-white pb-10 pt-16">
       <div className="mx-auto flex max-w-6xl flex-col gap-10 px-4 md:flex-row md:items-start md:justify-between md:px-0">
@@ -106,6 +138,29 @@ export default function Footer() {
               />
             </button>
           </div>
+
+          <div className="mt-6">
+            <p className="mb-2 text-xs font-semibold text-[#14183E] md:text-sm">
+              Stay updated
+            </p>
+            <div className="flex flex-col gap-2 sm:flex-row">
+              <input
+                type="email"
+                placeholder="Enter your email"
+                className="flex-1 rounded-full border border-neutral-200 px-3 py-2 text-xs text-neutral-700 outline-none focus:border-[#0073D9] md:text-sm"
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+              />
+              <button
+                type="button"
+                onClick={handleSubscribe}
+                disabled={loading}
+                className="mt-2 inline-flex items-center justify-center rounded-full bg-[#0073D9] px-4 py-2 text-xs font-semibold text-white shadow-sm shadow-[#0073D9]/30 transition hover:-translate-y-0.5 hover:bg-[#005fb1] disabled:cursor-not-allowed disabled:opacity-60 sm:mt-0"
+              >
+                {loading ? "Sending..." : "Subscribe"}
+              </button>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -115,4 +170,3 @@ export default function Footer() {
     </footer>
   );
 }
-

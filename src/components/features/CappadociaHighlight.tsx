@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 const images = ["/images/f1.png", "/images/f2.png", "/images/f3.png"];
 
@@ -35,16 +36,15 @@ export default function CappadociaHighlight() {
             ))}
           </div>
 
-          <button
-            type="button"
+          <Link
+            href="/cappadocia-balloons"
             className="inline-flex items-center gap-3 rounded-full bg-[#F1A501] px-7 py-3 text-sm font-semibold text-white shadow-md shadow-[#F1A501]/40 transition-transform transition-shadow hover:-translate-y-0.5 hover:shadow-lg"
           >
             <span>View Details</span>
             <span className="text-lg">→</span>
-          </button>
+          </Link>
         </div>
       </div>
     </section>
   );
 }
-

@@ -10,24 +10,24 @@ export default function GroupsPage() {
         <section className="bg-white py-16">
           <div className="mx-auto flex max-w-6xl flex-col gap-8 px-4 md:flex-row md:gap-10 md:px-0">
             <div className="w-full md:w-[38%]">
-              <div className="rounded-[24px] bg-white p-4 text-[#14183E] shadow-[0_24px_48px_rgba(0,0,0,0.08)]">
-                <div className="mb-4 flex overflow-hidden rounded-full bg-neutral-100 text-xs">
+              <div className="rounded-[24px] bg-[#F5F8FF] p-4 text-[#14183E] shadow-[0_24px_48px_rgba(0,0,0,0.06)]">
+                <div className="mb-4 flex overflow-hidden rounded-full bg-white text-xs">
                   <button
                     type="button"
-                    className="flex-1 rounded-full bg-[#0073D9] px-4 py-2 font-semibold text-white"
+                    className="flex-1 rounded-full bg-[#0073D9] px-4 py-2 font-semibold text-white shadow-sm shadow-[#0073D9]/40"
                   >
                     Explore
                   </button>
                   <button
                     type="button"
-                    className="flex-1 rounded-full px-4 py-2 font-semibold text-neutral-500"
+                    className="flex-1 rounded-full px-4 py-2 font-semibold text-[#0073D9] hover:bg-[#F5F8FF]"
                   >
                     Chats
                   </button>
                 </div>
 
                 <div className="mb-4">
-                  <div className="flex items-center gap-3 rounded-full bg-neutral-100 px-4 py-2">
+                  <div className="flex items-center gap-3 rounded-full border border-neutral-200 bg-white px-4 py-2">
                     <span className="relative h-4 w-4">
                       <Image
                         src="/images/question.svg"
@@ -51,7 +51,10 @@ export default function GroupsPage() {
                       { name: "Zeynep Demir", img: "/images/zeynep.jpeg", time: "1h", text: "Anyone want to explore Ephesus?" },
                       { name: "Kaan Kaya", img: "/images/kaan.jpeg", time: "3h", text: "Traveling to Antalya next week." },
                     ].map((p) => (
-                    <div key={p.name} className="flex items-center gap-3 rounded-[16px] bg-neutral-50 px-3 py-2">
+                    <div
+                      key={p.name}
+                      className="flex items-center gap-3 rounded-[16px] border border-neutral-100 bg-white px-3 py-2"
+                    >
                       <div className="relative h-9 w-9 overflow-hidden rounded-full">
                         <Image src={p.img} alt={p.name} fill className="object-cover" />
                       </div>
@@ -66,7 +69,7 @@ export default function GroupsPage() {
                   ))}
                 </div>
 
-                <div className="mt-6 rounded-[16px] bg-neutral-50 p-3">
+                <div className="mt-6 rounded-[16px] border border-neutral-100 bg-white p-3">
                   <div className="relative h-28 w-full overflow-hidden rounded-[12px]">
                     <Image src="/images/balon.jpeg" alt="Balloon" fill className="object-cover" />
                   </div>
@@ -98,44 +101,46 @@ export default function GroupsPage() {
             </div>
 
             <div className="w-full md:flex-1">
-              <div className="rounded-[24px] bg-white p-5 text-[#14183E] shadow-[0_24px_48px_rgba(0,0,0,0.08)]">
-                <div className="relative h-40 w-full overflow-hidden rounded-[16px]">
-                  <Image src="/images/card2.jpeg" alt="City" fill className="object-cover" />
-                  <div className="absolute right-3 top-3 rounded-full bg-white/90 px-3 py-1 text-[11px] text-[#14183E] shadow-sm">
-                    İzmir, Turkey
+              <div className="rounded-[24px] bg-[#F5F8FF] p-1.5 shadow-[0_24px_48px_rgba(0,0,0,0.06)]">
+                <div className="rounded-[20px] bg-white p-5 text-[#14183E]">
+                  <div className="relative h-40 w-full overflow-hidden rounded-[16px]">
+                    <Image src="/images/card2.jpeg" alt="City" fill className="object-cover" />
+                    <div className="absolute right-3 top-3 rounded-full bg-white/90 px-3 py-1 text-[11px] text-[#14183E] shadow-sm">
+                      İzmir, Turkey
+                    </div>
                   </div>
-                </div>
 
-                <div className="relative -mt-9 mb-4 ml-5 h-16 w-16 overflow-hidden rounded-full ring-4 ring-white">
-                  <Image src="/images/girl.jpeg" alt="Profile" fill className="object-cover" />
-                </div>
+                  <div className="relative -mt-9 mb-4 ml-5 h-16 w-16 overflow-hidden rounded-full ring-4 ring-white">
+                    <Image src="/images/girl.jpeg" alt="Profile" fill className="object-cover" />
+                  </div>
 
-                <div className="mb-3 flex items-center gap-2">
-                  <h2 className="text-lg font-semibold text-[#14183E]">Elif Yıldız, 26</h2>
-                  <span className="h-2 w-2 rounded-full bg-green-400" />
-                </div>
-                <p className="mb-4 text-xs text-neutral-600">
-                  Adventure seeker and food lover exploring the beautiful coasts of Turkey.
-                  Always looking for new friends to share experiences with!
-                </p>
+                  <div className="mb-3 flex items-center gap-2">
+                    <h2 className="text-lg font-semibold text-[#14183E]">Elif Yıldız, 26</h2>
+                    <span className="h-2 w-2 rounded-full bg-green-400" />
+                  </div>
+                  <p className="mb-4 text-xs text-neutral-600">
+                    Adventure seeker and food lover exploring the beautiful coasts of Turkey.
+                    Always looking for new friends to share experiences with!
+                  </p>
 
-                <div className="mb-5 flex flex-wrap gap-2">
-                  {["Nature", "Food", "Photography", "Travel"].map((t) => (
-                  <span
-                    key={t}
-                    className="inline-flex items-center rounded-full bg-[#E6F4FF] px-3 py-1 text-[11px] text-[#0073D9]"
+                  <div className="mb-5 flex flex-wrap gap-2">
+                    {["Nature", "Food", "Photography", "Travel"].map((t) => (
+                    <span
+                      key={t}
+                      className="inline-flex items-center rounded-full bg-[#E6F4FF] px-3 py-1 text-[11px] text-[#0073D9]"
+                    >
+                      {t}
+                    </span>
+                    ))}
+                  </div>
+
+                  <button
+                    type="button"
+                    className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#3DA9FF] to-[#06B0FF] px-6 py-2.5 text-sm font-semibold text-white shadow-[0_16px_32px_rgba(0,0,0,0.25)]"
                   >
-                    {t}
-                  </span>
-                  ))}
+                    Send Request
+                  </button>
                 </div>
-
-                <button
-                  type="button"
-                  className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#3DA9FF] to-[#06B0FF] px-6 py-2.5 text-sm font-semibold text-white shadow-[0_16px_32px_rgba(0,0,0,0.25)]"
-                >
-                  Send Request
-                </button>
               </div>
             </div>
           </div>

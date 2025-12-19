@@ -125,6 +125,68 @@ export default function TripsHero() {
         clearTimeout(loadingTimeoutRef.current);
         loadingTimeoutRef.current = null;
       }
+      setSelectedTheme(null);
+      setDestination("");
+      setTravelType(null);
+      setStartDate(null);
+      setEndDate(null);
+      setFriendsCount(0);
+      setFamilyCount(0);
+      setCalendarMonth(() => {
+        const now = new Date();
+        return new Date(now.getFullYear(), now.getMonth(), 1);
+      });
+      return;
+    }
+
+    const stepParam = searchParams.get("step");
+    if (stepParam) {
+      const parsedStep = Number(stepParam);
+      if (parsedStep >= 1 && parsedStep <= 4) {
+        setStep(parsedStep);
+      }
+    }
+
+    const destinationParam = searchParams.get("destination");
+    if (destinationParam) {
+      setDestination(destinationParam);
+    }
+
+    const moodParam = searchParams.get("mood");
+    if (moodParam) {
+      setSelectedTheme(moodParam);
+    }
+
+    const startParam = searchParams.get("startDate");
+    const endParam = searchParams.get("endDate");
+
+    let parsedStart: Date | null = null;
+    let parsedEnd: Date | null = null;
+
+    if (startParam) {
+      const parsed = new Date(startParam);
+      if (!Number.isNaN(parsed.getTime())) {
+        parsedStart = parsed;
+      }
+    }
+
+    if (endParam) {
+      const parsed = new Date(endParam);
+      if (!Number.isNaN(parsed.getTime())) {
+        parsedEnd = parsed;
+      }
+    }
+
+    if (parsedStart || parsedEnd) {
+      setStartDate(parsedStart);
+      setEndDate(parsedEnd);
+
+      const reference = parsedStart || parsedEnd;
+      if (reference) {
+        setCalendarMonth(
+          new Date(reference.getFullYear(), reference.getMonth(), 1),
+        );
+      }
     }
   }, [isOpen]);
 
@@ -173,7 +235,6 @@ export default function TripsHero() {
     topBarWidthClass = "w-4/4";
   }
 
-  const bottomBarWidthClass = topBarWidthClass;
   const primaryActionLabel =
     step === 4 ? (saving ? "Saving..." : "Save") : isLoading ? "Loading..." : "Continue";
 
@@ -681,25 +742,8 @@ export default function TripsHero() {
             {step === 3 && (
               <div className="mb-8">
                 <div className="mb-6 flex justify-center">
-                  <div className="flex w-full max-w-xs items-center rounded-full bg-white/10 p-1 text-xs md:max-w-sm md:text-sm">
-                    <button
-                      type="button"
-                      className="flex-1 rounded-full bg-white px-3 py-1.5 text-xs font-medium text-[#003666] md:px-4 md:py-2"
-                    >
-                      Dates
-                    </button>
-                    <button
-                      type="button"
-                      className="flex-1 rounded-full px-3 py-1.5 text-xs font-medium text-white/70 md:px-4 md:py-2"
-                    >
-                      Months
-                    </button>
-                    <button
-                      type="button"
-                      className="flex-1 rounded-full px-3 py-1.5 text-xs font-medium text-white/70 md:px-4 md:py-2"
-                    >
-                      Flexible
-                    </button>
+                  <div className="flex w-full max-w-[180px] items-center justify-center rounded-full bg-white px-3 py-1.5 text-xs font-medium text-[#003666] md:max-w-xs md:px-4 md:py-2 md:text-sm">
+                    Dates
                   </div>
                 </div>
 
@@ -913,11 +957,6 @@ export default function TripsHero() {
             )}
 
             <div className="border-t border-white/20 pt-5">
-              <div className="mb-4 h-1 w-full rounded-full bg-white/15">
-                <div
-                  className={`h-full rounded-full bg-[#6BB7FF] ${bottomBarWidthClass}`}
-                />
-              </div>
               <div className="flex flex-col justify-between gap-3 md:flex-row">
                 <button
                   type="button"

@@ -30,7 +30,7 @@ export default function Hero() {
 
           <div className="flex items-center gap-6">
             <Link
-              href="#create-trip"
+              href="/trips"
               className="inline-flex items-center gap-2 rounded-full bg-[#F1A501] px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-[#F1A501]/40 transition-transform transition-shadow hover:-translate-y-0.5 hover:shadow-xl"
             >
               <span>Create Trips</span>

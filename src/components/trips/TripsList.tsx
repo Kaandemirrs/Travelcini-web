@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { useAuth } from "@/context/AuthContext";
@@ -52,6 +53,7 @@ function formatDateRange(trip: TripWithMeta) {
 
 export default function TripsList() {
   const { user } = useAuth();
+  const router = useRouter();
   const [trips, setTrips] = useState<TripWithMeta[]>([]);
 
   useEffect(() => {
@@ -164,6 +166,29 @@ export default function TripsList() {
                     <div className="mt-2 flex justify-end">
                       <button
                         type="button"
+                        onClick={() => {
+                          const params = new URLSearchParams();
+                          params.set("plan", "1");
+                          params.set("step", "4");
+
+                          if (trip.destination) {
+                            params.set("destination", trip.destination);
+                          }
+
+                          if (trip.mood) {
+                            params.set("mood", trip.mood);
+                          }
+
+                          if (trip.dates?.startDate) {
+                            params.set("startDate", trip.dates.startDate);
+                          }
+
+                          if (trip.dates?.endDate) {
+                            params.set("endDate", trip.dates.endDate);
+                          }
+
+                          router.push(`/trips?${params.toString()}`);
+                        }}
                         className="inline-flex items-center justify-center rounded-full bg-[#0073D9] px-4 py-1.5 text-xs font-medium text-white shadow-sm shadow-[#0073D9]/30 transition hover:-translate-y-0.5 hover:bg-[#005fb1]"
                       >
                         View

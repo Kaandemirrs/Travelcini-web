@@ -23,9 +23,9 @@ export default function Hero() {
             Travel, enjoy and live a new and full life
           </h1>
           <p className="mb-8 text-sm leading-relaxed text-neutral-500 md:text-base">
-            Built Wicket longer admire do barton vanity itself do in it.{" "}
-            Preferred to sportsmen it engrossed listening. Park gate sell they
-            west hard for the.
+            Plan every trip with clarity, not endless chat screenshots. TravelCini keeps your destinations,
+            dates, budgets and group decisions in one shared view so everyone knows what happens next.
+            Spend less time coordinating and more time looking forward to the journey.
           </p>
 
           <div className="flex items-center gap-6">

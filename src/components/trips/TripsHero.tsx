@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { saveTrip } from "@/hooks/useTripSaver";
+import { saveTrip, updateTrip } from "@/hooks/useTripSaver";
 
 const monthNames = [
   "January",
@@ -102,6 +102,7 @@ export default function TripsHero() {
   const searchParams = useSearchParams();
   const isOpen = searchParams.get(QUERY_KEY) === "1";
   const [step, setStep] = useState(1);
+  const [editingTripId, setEditingTripId] = useState<string | null>(null);
   const [selectedTheme, setSelectedTheme] = useState<string | null>(null);
   const [destination, setDestination] = useState("");
   const [travelType, setTravelType] = useState<"solo" | "couple" | "friends" | "family" | null>(null);
@@ -120,6 +121,7 @@ export default function TripsHero() {
   useEffect(() => {
     if (!isOpen) {
       setStep(1);
+      setEditingTripId(null);
       setIsLoading(false);
       if (loadingTimeoutRef.current) {
         clearTimeout(loadingTimeoutRef.current);
@@ -188,6 +190,13 @@ export default function TripsHero() {
         );
       }
     }
+
+    const tripIdParam = searchParams.get("tripId");
+    if (tripIdParam) {
+      setEditingTripId(tripIdParam);
+    } else {
+      setEditingTripId(null);
+    }
   }, [isOpen]);
 
   useEffect(() => {
@@ -236,7 +245,7 @@ export default function TripsHero() {
   }
 
   const primaryActionLabel =
-    step === 4 ? (saving ? "Saving..." : "Save") : isLoading ? "Loading..." : "Continue";
+    step === 4 ? (saving ? "Saving..." : editingTripId ? "Updating..." : "Save") : isLoading ? "Loading..." : "Continue";
 
   let dateLabel = "Flexible dates";
 
@@ -300,7 +309,15 @@ export default function TripsHero() {
   const leftMonth = calendarMonth;
   const rightMonth = addMonths(calendarMonth, 1);
 
+  const secondaryActionLabel =
+    step === 4 && editingTripId ? "Edit" : "Back";
+
   const handleBack = () => {
+    if (step === 4 && editingTripId) {
+      setStep(1);
+      return;
+    }
+
     if (step === 1) {
       closePlanning();
     } else {
@@ -358,10 +375,13 @@ export default function TripsHero() {
         friendsCount,
         familyCount,
       };
-
-      await saveTrip(tripData);
-
-      window.alert("Trip Saved!");
+      if (editingTripId) {
+        await updateTrip(editingTripId, tripData);
+        window.alert("Trip updated!");
+      } else {
+        await saveTrip(tripData);
+        window.alert("Trip Saved!");
+      }
       closePlanning();
     } catch (error: any) {
       if (error?.message === "LIMIT_REACHED") {
@@ -964,7 +984,7 @@ export default function TripsHero() {
                   disabled={isLoading || (step === 4 && saving)}
                   className="inline-flex items-center justify-center rounded-full border border-white/40 px-8 py-2.5 text-sm font-semibold text-white transition-colors hover:border-white hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-70"
                 >
-                  Back
+                  {secondaryActionLabel}
                 </button>
                 <button
                   type="button"

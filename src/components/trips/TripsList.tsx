@@ -170,6 +170,7 @@ export default function TripsList() {
                           const params = new URLSearchParams();
                           params.set("plan", "1");
                           params.set("step", "4");
+                          params.set("tripId", trip.id);
 
                           if (trip.destination) {
                             params.set("destination", trip.destination);

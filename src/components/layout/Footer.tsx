@@ -9,15 +9,15 @@ import { db } from "@/lib/firebase";
 const columns = [
   {
     title: "Company",
-    links: ["About", "Careers", "Mobile"],
+    links: ["About", "Privacy & Security"],
   },
   {
     title: "Contact",
-    links: ["Help/FAQ", "Press", "Affiliates"],
+    links: ["Help/FAQ"],
   },
   {
     title: "More",
-    links: ["Airlinefees", "Airline", "Low fare tips"],
+    links: ["Accessibility"],
   },
 ];
 
@@ -74,13 +74,26 @@ export default function Footer() {
                 {column.title}
               </h3>
               <ul className="space-y-2 text-xs text-neutral-500 md:text-sm">
-                {column.links.map((item) => (
-                  <li key={item}>
-                    <Link href="#" className="transition-colors hover:text-[#0073D9]">
-                      {item}
-                    </Link>
-                  </li>
-                ))}
+                {column.links.map((item) => {
+                  const href =
+                    item === "About"
+                      ? "/about"
+                      : item === "Privacy & Security"
+                        ? "/privacy-security"
+                        : item === "Help/FAQ"
+                          ? "/help"
+                          : item === "Accessibility"
+                            ? "/accessibility"
+                            : "#";
+
+                  return (
+                    <li key={item}>
+                      <Link href={href} className="transition-colors hover:text-[#0073D9]">
+                        {item}
+                      </Link>
+                    </li>
+                  );
+                })}
               </ul>
             </div>
           ))}

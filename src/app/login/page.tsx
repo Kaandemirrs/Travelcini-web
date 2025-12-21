@@ -13,10 +13,15 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
+  const [acceptedPolicy, setAcceptedPolicy] = useState(false);
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
     setError("");
+    if (!acceptedPolicy) {
+      setError("Please confirm that you have read and accept the Privacy Policy.");
+      return;
+    }
     setSubmitting(true);
 
     try {
@@ -130,15 +135,39 @@ export default function LoginPage() {
                 />
               </div>
 
-              {error && (
-                <div className="text-sm font-medium text-red-500">
-                  {error}
+              <div className="space-y-3">
+                <div className="rounded-2xl border border-neutral-200 bg-neutral-50 p-3 text-xs text-neutral-600">
+                  <label className="flex items-start gap-2">
+                    <input
+                      type="checkbox"
+                      checked={acceptedPolicy}
+                      onChange={(event) => setAcceptedPolicy(event.target.checked)}
+                      className="mt-0.5 h-4 w-4 rounded border-neutral-300 text-[#0073D9] focus:ring-[#0073D9]"
+                    />
+                    <span>
+                      By using this application, I confirm that I have read and agree to the privacy
+                      policy on the{" "}
+                      <Link
+                        href="/privacy-security"
+                        className="font-semibold text-[#0073D9] hover:text-[#005fb1]"
+                      >
+                        Privacy &amp; Security
+                      </Link>{" "}
+                      page.
+                    </span>
+                  </label>
                 </div>
-              )}
+
+                {error && (
+                  <div className="text-sm font-medium text-red-500">
+                    {error}
+                  </div>
+                )}
+              </div>
 
               <button
                 type="submit"
-                disabled={submitting}
+                disabled={submitting || !acceptedPolicy}
                 className="flex w-full items-center justify-center rounded-full bg-[#0073D9] px-4 py-2.5 text-sm font-semibold text-white shadow-md shadow-[#0073D9]/40 transition hover:-translate-y-0.5 hover:bg-[#005fb1] hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-70"
               >
                 {submitting ? "Signing in..." : "Sign In"}
@@ -188,4 +217,3 @@ export default function LoginPage() {
     </div>
   );
 }
-

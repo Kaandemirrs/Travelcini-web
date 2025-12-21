@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { useAuth } from "@/context/AuthContext";
+import { deleteTrip } from "@/hooks/useTripSaver";
 import type { Trip } from "@/types/firestore";
 
 type TripWithMeta = Trip & {
@@ -55,6 +56,7 @@ export default function TripsList() {
   const { user } = useAuth();
   const router = useRouter();
   const [trips, setTrips] = useState<TripWithMeta[]>([]);
+  const [deletingId, setDeletingId] = useState<string | null>(null);
 
   useEffect(() => {
     if (!user) {
@@ -163,7 +165,41 @@ export default function TripsList() {
                       <p className="text-xs text-neutral-500">{dateRange}</p>
                     </div>
 
-                    <div className="mt-2 flex justify-end">
+                    <div className="mt-2 flex justify-end gap-2">
+                      <button
+                        type="button"
+                        onClick={async () => {
+                          const confirmed = window.confirm(
+                            "Are you sure you want to delete this trip? This action cannot be undone.",
+                          );
+
+                          if (!confirmed) {
+                            return;
+                          }
+
+                          try {
+                            setDeletingId(trip.id);
+                            await deleteTrip(trip.id);
+                            window.alert("Trip deleted.");
+                          } catch (error: any) {
+                            if (error?.message === "NOT_AUTHENTICATED") {
+                              router.push("/login");
+                            } else if (error?.message === "FORBIDDEN") {
+                              window.alert("You are not allowed to delete this trip.");
+                            } else {
+                              window.alert("Failed to delete trip. Please try again.");
+                            }
+                          } finally {
+                            setDeletingId((current) =>
+                              current === trip.id ? null : current,
+                            );
+                          }
+                        }}
+                        disabled={deletingId === trip.id}
+                        className="inline-flex items-center justify-center rounded-full border border-neutral-200 px-3 py-1.5 text-xs font-medium text-neutral-600 transition hover:-translate-y-0.5 hover:bg-neutral-50 disabled:cursor-not-allowed disabled:opacity-60"
+                      >
+                        {deletingId === trip.id ? "Deleting..." : "Delete"}
+                      </button>
                       <button
                         type="button"
                         onClick={() => {

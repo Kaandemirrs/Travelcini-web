@@ -1,6 +1,6 @@
 "use client";
 
-import { addDoc, collection, doc, getDoc, increment, serverTimestamp, updateDoc } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, getDoc, increment, serverTimestamp, updateDoc } from "firebase/firestore";
 import { auth, db } from "@/lib/firebase";
 import type { User } from "@/types/firestore";
 
@@ -64,4 +64,27 @@ export async function updateTrip(tripId: string, tripData: any) {
     ...tripData,
     updatedAt: serverTimestamp(),
   });
+}
+
+export async function deleteTrip(tripId: string) {
+  const currentUser = auth.currentUser;
+
+  if (!currentUser) {
+    throw new Error("NOT_AUTHENTICATED");
+  }
+
+  const tripRef = doc(db, "trips", tripId);
+  const tripSnapshot = await getDoc(tripRef);
+
+  if (!tripSnapshot.exists()) {
+    throw new Error("TRIP_NOT_FOUND");
+  }
+
+  const data = tripSnapshot.data() as any;
+
+  if (data.userId !== currentUser.uid) {
+    throw new Error("FORBIDDEN");
+  }
+
+  await deleteDoc(tripRef);
 }

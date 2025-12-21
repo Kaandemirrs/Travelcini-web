@@ -9,7 +9,7 @@ import { db } from "@/lib/firebase";
 const columns = [
   {
     title: "Company",
-    links: ["About", "Privacy & Security"],
+    links: ["Site notice", "About", "Privacy & Security"],
   },
   {
     title: "Contact",
@@ -76,15 +76,17 @@ export default function Footer() {
               <ul className="space-y-2 text-xs text-neutral-500 md:text-sm">
                 {column.links.map((item) => {
                   const href =
-                    item === "About"
-                      ? "/about"
-                      : item === "Privacy & Security"
-                        ? "/privacy-security"
-                        : item === "Help/FAQ"
-                          ? "/help"
-                          : item === "Accessibility"
-                            ? "/accessibility"
-                            : "#";
+                    item === "Site notice"
+                      ? "/site-notice"
+                      : item === "About"
+                        ? "/about"
+                        : item === "Privacy & Security"
+                          ? "/privacy-security"
+                          : item === "Help/FAQ"
+                            ? "/help"
+                            : item === "Accessibility"
+                              ? "/accessibility"
+                              : "#";
 
                   return (
                     <li key={item}>

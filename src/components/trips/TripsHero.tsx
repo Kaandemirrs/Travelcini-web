@@ -95,6 +95,12 @@ const themes = [
   },
 ];
 
+const bestDealsPartners = [
+  { id: "experiences" as const },
+  { id: "expedia" as const },
+  { id: "more-providers" as const },
+] as const;
+
 const QUERY_KEY = "plan";
 
 export default function TripsHero() {
@@ -116,6 +122,7 @@ export default function TripsHero() {
   const [familyCount, setFamilyCount] = useState(0);
   const [saving, setSaving] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [activeBestDealsIndex, setActiveBestDealsIndex] = useState(0);
   const loadingTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
@@ -397,7 +404,7 @@ export default function TripsHero() {
   };
 
   const expediaDestination = destination && destination.trim().length > 0 ? destination : "Weltweit";
-  const expediaSrc = `https://www.expedia.de/marketing/widgets/searchform/widget?wtt=1&tp1=101578370&tp2=&lob=H,FH,F,CA,CR,A&des=${encodeURIComponent(
+  const expediaSrc = `https://www.expedia.de/marketing/widgets/searchform/widget?wtt=1&tp1=101578370&tp2=&lob=H,FH,F,CA&des=${encodeURIComponent(
     expediaDestination,
   )}&wbi=1&olc=000000&whf=4&hfc=C7C7C7&wif=4&ifc=000000&wbc=FFCB00&wbf=4&bfc=3D3100&wws=1&sfs=H600FW300F&langid=1031`;
 
@@ -958,17 +965,169 @@ export default function TripsHero() {
                         AI Map
                       </div>
                     </div>
-                    <div className="rounded-b-[24px] bg-white">
-                      <div className="h-[320px] sm:h-[360px] md:h-[420px] lg:h-[460px] w-full overflow-hidden rounded-b-[24px] bg-white">
-                        <iframe
-                          id="widgetIframe"
-                          src={expediaSrc}
-                          width="100%"
-                          height="100%"
-                          scrolling="auto"
-                          frameBorder="0"
-                          style={{ border: 0 }}
-                        />
+                    <div className="rounded-b-[24px] bg-white px-3 pb-3 pt-3 sm:px-4 sm:pb-4 sm:pt-3">
+                      <div className="relative h-[320px] w-full overflow-hidden rounded-[20px] bg-white sm:h-[360px] md:h-[420px] lg:h-[460px]">
+                        {bestDealsPartners[activeBestDealsIndex].id === "expedia" && (
+                          <iframe
+                            id="widgetIframe"
+                            src={expediaSrc}
+                            width="100%"
+                            height="100%"
+                            scrolling="auto"
+                            frameBorder="0"
+                            style={{ border: 0 }}
+                          />
+                        )}
+                        {bestDealsPartners[activeBestDealsIndex].id === "more-providers" && (
+                          <div className="flex h-full flex-col justify-between bg-gradient-to-br from-white via-[#F9FAFB] to-white p-5 text-left text-[#0F172A] sm:p-6">
+                            <div className="flex flex-1 flex-col justify-between gap-4 md:flex-row md:items-stretch">
+                              <div className="md:w-1/2">
+                                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#0369A1]">
+                                  Coming soon
+                                </p>
+                                <h3 className="mt-2 text-sm font-semibold md:text-base">
+                                  12Go routes and tickets
+                                </h3>
+                                <p className="mt-3 text-xs leading-relaxed text-neutral-600 md:text-sm">
+                                  For this trip you will soon be able to open 12Go directly here to
+                                  explore buses, trains and other routes that connect your plans.
+                                </p>
+                                <p className="mt-3 text-[11px] text-neutral-500">
+                                  The 12Go view will appear next to flights so you can see ground
+                                  options without leaving TravelCini.
+                                </p>
+                              </div>
+                              <div className="flex flex-1 items-center justify-center md:w-1/2">
+                                <a
+                                  href="https://www.jdoqocy.com/click-101578370-17115152"
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="inline-flex items-center justify-center"
+                                >
+                                  <img
+                                    src="https://www.lduhtrp.net/image-101578370-17115152"
+                                    alt="12Go routes and tickets"
+                                    width={300}
+                                    height={500}
+                                    className="h-full max-h-[260px] w-auto rounded-[18px] border border-white/10 bg-white/5 object-cover shadow-[0_18px_40px_rgba(0,0,0,0.5)] sm:max-h-[300px] md:max-h-[360px]"
+                                  />
+                                </a>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                        {bestDealsPartners[activeBestDealsIndex].id === "experiences" && (
+                          <div className="relative flex h-full flex-col justify-between bg-gradient-to-br from-[#FFFBEB] via-[#FEF3C7] to-[#FDE68A] p-5 text-left text-[#78350F] sm:p-6">
+                            <div className="pointer-events-none absolute inset-0 rounded-[24px] ring-2 ring-[#FBBF24]/60" />
+                            <div className="flex flex-1 flex-col justify-between gap-4 md:flex-row md:items-stretch">
+                              <div className="md:w-1/2">
+                                <p className="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#92400E]">
+                                  <span className="inline-flex h-1.5 w-1.5 rounded-full bg-[#F97316]" />
+                                  Cheap tickets web
+                                </p>
+                                <h3 className="mt-2 text-sm font-semibold md:text-base">
+                                  Get the most out of your next trip
+                                </h3>
+                                <p className="mt-3 text-xs leading-relaxed text-[#92400E]/90 md:text-sm">
+                                  For this trip you will be able to open curated cheap ticket links
+                                  that help you combine experiences, trains and other routes around
+                                  your plan.
+                                </p>
+                                <p className="mt-3 text-[11px] text-[#B45309]">
+                                  Featured partner shown first so you can jump into value options
+                                  without leaving this planning view.
+                                </p>
+                              </div>
+                              <div className="flex flex-1 items-center justify-center md:w-1/2">
+                                <a
+                                  href="https://www.dpbolvw.net/click-101578370-13983555"
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="group inline-flex w-full max-w-[260px] flex-col rounded-[18px] border border-[#FBBF24] bg-white px-4 py-3 text-left text-xs text-neutral-800 shadow-[0_22px_60px_rgba(0,0,0,0.4)] transition-transform transition-shadow hover:-translate-y-0.5 hover:shadow-[0_26px_70px_rgba(0,0,0,0.5)]"
+                                >
+                                  <div className="flex items-center justify-between">
+                                    <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#0F172A]">
+                                      Cheap tickets web
+                                    </span>
+                                    <span className="rounded-full bg-gradient-to-r from-[#FBBF24] to-[#F59E0B] px-2 py-0.5 text-[10px] font-semibold text-[#78350F]">
+                                      Featured
+                                    </span>
+                                  </div>
+                                  <div className="mt-3">
+                                    <div className="flex items-baseline justify-between">
+                                      <span className="text-xs font-semibold text-[#0F172A]">
+                                        This trip
+                                      </span>
+                                      <span className="text-[11px] text-neutral-500">from</span>
+                                    </div>
+                                    <div className="mt-1 text-sm font-semibold text-[#0F172A]">
+                                      Anywhere → Your destination
+                                    </div>
+                                  </div>
+                                  <div className="mt-3 h-px w-full bg-gradient-to-r from-transparent via-[#E5E7EB] to-transparent" />
+                                  <div className="mt-3 flex items-center justify-between">
+                                    <div className="text-[11px] text-neutral-500">
+                                      Explore cheap ticket deals
+                                    </div>
+                                    <div className="text-base font-semibold text-[#0073D9]">
+                                      €•••
+                                    </div>
+                                  </div>
+                                  <div className="mt-3 flex items-center justify-between">
+                                    <span className="text-[11px] font-semibold text-[#0073D9]">
+                                      Check cheap tickets
+                                    </span>
+                                    <span className="text-xs text-neutral-500">→</span>
+                                  </div>
+                                  <img
+                                    src="https://www.awltovhc.com/image-101578370-13983555"
+                                    alt=""
+                                    width={1}
+                                    height={1}
+                                    className="mt-1 h-px w-px opacity-0"
+                                  />
+                                </a>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                        <button
+                          type="button"
+                          onClick={() =>
+                            setActiveBestDealsIndex(
+                              (activeBestDealsIndex - 1 + bestDealsPartners.length) %
+                                bestDealsPartners.length,
+                            )
+                          }
+                          className="absolute left-3 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-[#0073D9] text-xs font-semibold text-white shadow-md shadow-black/30 transition hover:bg-[#005fb1]"
+                        >
+                          ←
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() =>
+                            setActiveBestDealsIndex(
+                              (activeBestDealsIndex + 1) % bestDealsPartners.length,
+                            )
+                          }
+                          className="absolute right-3 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-[#0073D9] text-xs font-semibold text-white shadow-md shadow-black/30 transition hover:bg-[#005fb1]"
+                        >
+                          →
+                        </button>
+                      </div>
+                      <div className="mt-4 flex items-center justify-center gap-2">
+                        {bestDealsPartners.map((partner, index) => (
+                          <button
+                            key={partner.id}
+                            type="button"
+                            onClick={() => setActiveBestDealsIndex(index)}
+                            className={`h-2.5 rounded-full transition-all ${
+                              activeBestDealsIndex === index
+                                ? "w-6 bg-[#0073D9]"
+                                : "w-2 bg-neutral-300"
+                            }`}
+                          />
+                        ))}
                       </div>
                     </div>
                   </div>

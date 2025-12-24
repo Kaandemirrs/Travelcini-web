@@ -20,7 +20,7 @@ export async function saveTrip(tripData: any) {
 
   const user = userSnapshot.data() as User;
 
-  if (user.subscriptionStatus === "free" && user.tripsCreatedCount >= 1) {
+  if (user.subscriptionStatus === "free" && user.tripsCreatedCount >= 5) {
     const limitError = new Error("LIMIT_REACHED");
     throw limitError;
   }

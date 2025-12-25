@@ -9,7 +9,7 @@ import { LogOut, Menu, User, X } from "lucide-react";
 const navItems = [
   { label: "Home", href: "/" },
   { label: "Trips", href: "/trips" },
-  { label: "Groups", href: "/groups" },
+  { label: "Messages", href: "/messages" },
 ];
 
 export default function Header() {
